@@ -1,0 +1,52 @@
+.row{
+    width: 100%;
+    display: table;
+    clear: both;
+    height: 10%;
+  }
+  
+  .column{
+    float: left;
+    width: 30%;
+    height: auto;
+    margin-left: 2.5%;
+  }
+  
+  .MuiTable-root{
+    background-color: antiquewhite;
+    border: solid 2px brown;
+  }
+  
+  .MuiTableCell-root.MuiTableCell-head.MuiTableCell-sizeSmall{
+    text-align: center;
+    padding: 1px;
+    font-size: 0.9rem;
+  
+  }
+  
+  .MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeSmall  {
+    font-size: 0.8rem;
+    padding: 1px;
+    text-align: center;
+  }
+  
+  .MuiTableRow-root:hover {
+    background-color: floralwhite;
+  }
+
+a {
+    color: #354a5f;
+}
+
+a:hover {
+    color: brown
+}
+
+.table-scorers{
+  width: 50%;
+  display: table;
+  clear: both;
+  margin-left: 25%;
+  margin-top: 20px;
+}
+

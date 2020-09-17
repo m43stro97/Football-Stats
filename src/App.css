@@ -14,14 +14,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: brown;
+}
+
+body{
+  background-color: tan;
+  color: brown;
+  font-size: calc(10px + 2vmin);
 }
 
 .App-link {
@@ -35,4 +39,31 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.app{
+  background-color: red;
+}
+
+.title{
+  color: hsla  ;
+  font-family: initial;
+  
+}
+
+img{
+  max-width: 180px;
+  max-height: 180px;
+}
+
+.overlay{
+  opacity: 0;
+}
+
+.overlay:hover{
+  opacity: 1;
+}
+
+.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorPrimary.MuiPaper-elevation4{
+  background-color: tan;
 }

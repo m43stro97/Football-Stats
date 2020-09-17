@@ -1,0 +1,13 @@
+.bar {
+    flex-grow: 1;
+}
+
+.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorPrimary.MuiPaper-elevation4{
+    background-color: brown;
+}
+
+.menuButton {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
