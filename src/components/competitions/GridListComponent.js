@@ -13,16 +13,14 @@ import { useHistory } from 'react-router-dom';
 import '../../App.css';
 import { actions } from '../../redux-sagas/sagas';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    // backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     alignContent: 'start',
     alignSelf: 'center',
-    // justifySelf: 'center',
     paddingLeft: '20%',
     paddingRight: '20%',
     paddingTop: '100px'
@@ -30,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
-}));
+});
 
 const GridListComponent = () => {
 

@@ -10,6 +10,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import Title from '../common/Title';
+import Rounds from '../competitions/matches/Rounds';
 import Scorers from '../competitions/scorers/Scorers';
 import Standings from '../competitions/standings/Standings';
 
@@ -34,6 +35,7 @@ const CompetitionInfo = ({match}) => {
           <TabList onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Standings" value="1" />
             <Tab label="Scorers" value="2" />
+            <Tab label="Matches" value="3" />
           </TabList>
         </AppBar>
         <TabPanel value="1">
@@ -41,6 +43,9 @@ const CompetitionInfo = ({match}) => {
         </TabPanel>
         <TabPanel value="2">
           <Scorers title={'SCORERS'} competitionId={competitionId} />
+        </TabPanel>
+        <TabPanel value="3">
+          <Rounds title={'MATCHES'} competitionId={competitionId} />
         </TabPanel>
       </TabContext>
 

@@ -1,0 +1,22 @@
+.matches{
+    width:60%;
+    margin-left: 20%;
+    margin-top: 60px;
+    display: flex;
+}
+
+.round-list{
+    width: 300px;
+    height: 400px;
+    background-color: antiquewhite;
+}
+
+.MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button:hover{
+    background-color: floralwhite;
+}
+
+.table-matches.MuiTableContainer-root > table{
+    width: 100%;
+    min-height: 400px;
+    max-height: 400px;
+}

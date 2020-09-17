@@ -14,10 +14,10 @@ import Subtitle from './Subtitle';
 import '../../App.css';
 import '../../css/TableStandings.css';
 
-const TableComponent = ({title, rows, headers}) => (
+const TableComponent = ({title, rows, headers, css}) => (
   <>
     <Subtitle title={title} />
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={css}>
       <Table size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -39,10 +39,19 @@ const TableComponent = ({title, rows, headers}) => (
                     </Link>
                   </TableCell>);
                 }
+                if (Array.isArray(header.key)) {
+                  const result = header.key.map(key => get(row, key, key));
+                  const hasResult = result.every(it => it !== null);
+                  return (
+                    <TableCell>
+                      {hasResult ? result.join('') : 'por jogar'}
+                    </TableCell>);
+                }
                 return (
                   <TableCell>
                     {get(row, header.key)}
-                  </TableCell>);})}
+                  </TableCell>);
+              })}
             </TableRow>
           ))}
         </TableBody>

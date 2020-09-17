@@ -8,6 +8,7 @@ const initialState = {
   competitionsList: [],
   competitionStandings: [],
   scorers: [],
+  rounds: [],
 };
 
 const Api = 'http://api.football-data.org/v2/';
@@ -25,6 +26,8 @@ export const actions = dispatch => ({
     competitionId => dispatch({type: 'GET_STANDINGS_PER_COMPETITION', payload: competitionId},),
   getScorersPerCompetition:
     competitionId => dispatch({type: 'GET_SCORERS_PER_COMPETITION', payload: competitionId}),
+  getMatchesPerCompetition:
+    competitionId => dispatch({type: 'GET_MATCHES_PER_COMPETITION', payload: competitionId}),
 });
 
 //REDUCER
@@ -40,8 +43,9 @@ export function reducer (state = initialState, action) {
     case 'GET_STANDINGS_PER_COMPETITION_STORE':
       return {...state, competitionStandings: action.competitionStandings.data};
     case 'GET_SCORERS_PER_COMPETITION_STORE':
-      console.log(action.scorers.data.scorers);
       return {...state, scorers: action.scorers.data.scorers};
+    case 'GET_MATCHES_PER_COMPETITION_STORE':
+      return {...state, rounds: action.rounds};
     default:
       return state;
   }
@@ -105,6 +109,36 @@ function* getScorersPerCompetition(competitionId) {
 
 }
 
+function* getMatchesPerCompetition(competitionId) {
+
+  try {
+    const matches
+    = yield call(axios.get,
+      `${Api}competitions/${competitionId.payload}/matches/`, headerParams);
+
+    let round = matches.data.matches.reduce((acc, current) => {
+      const index = acc.findIndex(it => it.title === current.matchday);
+
+      if (index === -1) {
+        return [...acc, {title: current.matchday, matches: [current] }];
+      }
+      let nextMatchDay = acc[index];
+      nextMatchDay = {
+        ...nextMatchDay,
+        matches: [...nextMatchDay.matches, current]
+      };
+
+      acc.splice(index, 1, nextMatchDay);
+      return acc;
+    }, []);
+
+    yield put({ type: 'GET_MATCHES_PER_COMPETITION_STORE', rounds: round });
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 //SAGAS
 export default function* rootSaga() {
   yield takeEvery('INCREMENT', increment);
@@ -112,5 +146,5 @@ export default function* rootSaga() {
   yield takeEvery('GET_ALL_COMPETITIONS', getAllCompetitions);
   yield takeEvery('GET_STANDINGS_PER_COMPETITION', getStandingsPerCompetition);
   yield takeEvery('GET_SCORERS_PER_COMPETITION', getScorersPerCompetition);
-
+  yield takeEvery('GET_MATCHES_PER_COMPETITION', getMatchesPerCompetition);
 }
