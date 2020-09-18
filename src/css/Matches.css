@@ -1,22 +1,38 @@
-.matches{
+.main{
     width:60%;
+    height: 450px;
     margin-left: 20%;
     margin-top: 60px;
     display: flex;
 }
 
 .round-list{
-    width: 300px;
-    height: 400px;
+    width: 30%;
     background-color: antiquewhite;
 }
 
-.MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button:hover{
-    background-color: floralwhite;
+.matches-table{
+    width: 70%;
+    flex-wrap: row wrap;
 }
+
+
+
+.matches{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* .MuiButtonBase-root.MuiListItem-root.MuiListItem-gutters.MuiListItem-button:hover{
+    background-color: floralwhite;
+} */
 
 .table-matches.MuiTableContainer-root > table{
     width: 100%;
-    min-height: 400px;
-    max-height: 400px;
+    height: 450px;
+    /* min-height: 450px; */
+    /* max-height: 450px; */
 }
+

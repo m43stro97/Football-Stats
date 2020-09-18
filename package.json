@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "eslint-plugin-import-helpers": "^1.1.0",
     "lodash": "^4.17.20",
+    "moment": "^2.28.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",

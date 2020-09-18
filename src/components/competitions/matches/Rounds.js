@@ -1,4 +1,5 @@
-import { get, isEmpty } from 'lodash';
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList } from 'react-window';
@@ -10,12 +11,13 @@ import Subtitle from '../../common/Subtitle';
 import TableComponent from '../../common/TableComponent';
 import Row from './Row';
 
-const Rounds = ({title, competitionId}) => {
+const Rounds = ({ competitionId}) => {
   const [state, setState] = useState(true);
   const dispatch = useDispatch();
   const { getMatchesPerCompetition} = actions(dispatch);
   const rounds = useSelector(state => get(state, 'reducer.rounds'));
   const roundsSize = rounds.length;
+
   const [roundSelected, setRoundSelected] = useState({});
 
   useEffect(() => {
@@ -23,31 +25,30 @@ const Rounds = ({title, competitionId}) => {
       getMatchesPerCompetition(competitionId);
       setState(false);
     }
-    // if (rounds === {}) {
-    //   setRoundSelected(rounds[0]);
-    // }
+    if (!isEmpty(rounds) && isEmpty(roundSelected)) {
+      setRoundSelected(rounds[0]);
+    }
 
-  }, [competitionId, getMatchesPerCompetition, rounds, state]);
+  }, [competitionId, getMatchesPerCompetition, roundSelected, rounds, state]);
 
   const headers = [
     {key: 'utcDate', text: ''},
     {key: 'homeTeam.name', text: ''},
-    {key: ['score.fullTime.homeTeam', ' - ', 'score.fullTime.awayTeam'], text: 'Match'},
+    {key: ['score.fullTime.homeTeam', ' - ', 'score.fullTime.awayTeam'],
+      text: 'Match', type: 'button'},
     {key: 'awayTeam.name', text: ''},
-
   ];
 
   const handleClick = round => {
-    console.log(round);
-    setRoundSelected(round);
+    setRoundSelected({...round});
   };
 
   return (
     <div>
-      <Subtitle title={title} />
-      <div className="matches">
+      <Subtitle title={`Round ${roundSelected.title}`} />
+      <div className="main">
         <div className="round-list">
-          <FixedSizeList height={400} width={300} itemSize={40} itemCount={roundsSize}>
+          <FixedSizeList height={450} itemSize={40} itemCount={roundsSize}>
             {({index, style }) => <Row
                 index={index}
                 style={style}
@@ -55,8 +56,17 @@ const Rounds = ({title, competitionId}) => {
                 onClick={() => handleClick(rounds[index])} />}
           </FixedSizeList>
         </div>
-        <TableComponent headers={headers} rows={roundSelected.matches} css={'table-matches'} />
+        <div className="matches-table">
+          <div className="matches">
+            <TableComponent
+                headers={headers}
+                rows={roundSelected.matches}
+                css={'table-matches'} />
+          </div>
+        </div>
+
       </div>
+
     </div>
   );};
 

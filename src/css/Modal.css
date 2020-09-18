@@ -1,0 +1,16 @@
+.row-modal{
+    width: 100%;
+    display: flex;
+}
+
+.column-modal{
+    width: 50%;
+}
+
+.info{
+    font-size: 20px;
+}
+
+.info-title{
+    font-weight: bold;
+}

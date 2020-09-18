@@ -10,53 +10,69 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Subtitle from './Subtitle';
-
 import '../../App.css';
 import '../../css/TableStandings.css';
+import TransitionModal from './TransictionModal';
 
-const TableComponent = ({title, rows, headers, css}) => (
-  <>
-    <Subtitle title={title} />
-    <TableContainer component={Paper} className={css}>
-      <Table size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            {(headers || []).map(it =>
-              <TableCell >
-                {it.text}
-              </TableCell>
-            )}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rows || []).map(row => (
+import { IconButton } from '@material-ui/core';
+
+const TableComponent = ({title, rows, headers, css}) => {
+
+  const renderText = (row, header) => {
+
+    let textToRender;
+
+    if (Array.isArray(header.key)) {
+      const result = header.key.map(key => get(row, key, key));
+      const hasResult = result.every(it => it !== null);
+
+      textToRender = hasResult ? result.join('') : ' - ';
+    } else {
+      textToRender = get(row, header.key);
+    }
+
+    if (header.link) {
+      textToRender = (
+        <Link to={header.link.replace(':id', get(row, header.propLink))}>
+          {textToRender}
+        </Link>);
+    }
+
+    if (header.type === 'button') {
+      textToRender = (
+        <TransitionModal buttonText={textToRender} match={row} />
+      );
+    }
+    return textToRender;
+  };
+
+  return (
+    <>
+      <Subtitle title={title} />
+      <TableContainer component={Paper} className={css}>
+        <Table size="small" aria-label="a dense table">
+          <TableHead>
             <TableRow>
-              {headers.map(header => {
-                if (header.link) {
-                  return (<TableCell>
-                    <Link to={header.link.replace(':id', get(row, header.propLink))}>
-                      {get(row, header.key)}
-                    </Link>
-                  </TableCell>);
-                }
-                if (Array.isArray(header.key)) {
-                  const result = header.key.map(key => get(row, key, key));
-                  const hasResult = result.every(it => it !== null);
-                  return (
-                    <TableCell>
-                      {hasResult ? result.join('') : 'por jogar'}
-                    </TableCell>);
-                }
-                return (
-                  <TableCell>
-                    {get(row, header.key)}
-                  </TableCell>);
-              })}
+              {(headers || []).map((it, index) =>
+                <TableCell key={`${title}-header-${index}`}>
+                  {it.text}
+                </TableCell>
+              )}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </>
-);
+          </TableHead>
+          <TableBody>
+            {(rows || []).map((row, index) => (
+              <TableRow key={`${title}-row-${index}`}>
+                {headers.map((header, indexCell) => (
+                  <TableCell key={`${title}-cell-${index}-${indexCell}`}>
+                    {renderText(row, header)}
+                  </TableCell>))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
 export default TableComponent;

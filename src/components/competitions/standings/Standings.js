@@ -37,8 +37,8 @@ const Standings = ({ competitionId}) => {
   return (
     <div>
       <div className="row">
-        {(competitionStandings.standings || []).map(it => (
-          <div className="column">
+        {(competitionStandings.standings || []).map((it, index) => (
+          <div className="column" key={`standings-${index}`}>
             <TableComponent title={it.type} rows={it.table} headers={headers} />
           </div>
         ))}
